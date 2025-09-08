@@ -2,41 +2,80 @@ const readline = require("readline");
 
 const rl = readline.createInterface({
     input: process.stdin,
-    output: process.stdout,
+    output: process.stdout
+
 })
 
+function mainMenu(){
 console.log("Factorial Application");
 
-console.log("1. Sat Hello");
-console.log("2. Compile Factorial");
-console.log("3. Exit");
+console.log("1. Hello");
+console.log("2. Compute Factorial");
+console.log("3. exit");
 
-rl.question("Enter your choice (1-3" , choice =>{
-    if(choice=="1"){
+rl.question("Enter your choice (1-3)", choice =>{
+    if(choice === "1"){
         console.log("Hello There!");
-    } else if (choice=="2"){
-        console.log("Factorial");
-        rl.question("enter a number for factorial: ", (numStr) =>{
-         let num =preseInt(munStr)
+        backToMenu();                
 
-         if(isMainThread(num) || num<0){
-            console.log("plaese enter a non negative integer");
-         } else {
+    }else if (choice === "2"){
+        computeFactorial();
+        
+    } else if(choice === "3"){
+        console.log("existing program...Goodbye");
+        rl.close();
 
-            let fact =1;
+        console.log("Invalid choice, Please try again");
+        mainMenu();
 
-            for (let i = 1; i <= num ; i++){
-                fact *=i;
-            }
-
-            console.log("The factorial of " + num + "is" + fact);
-
-         }
-     });
-
-    } else if (choice=="3"){
-        console.log("Exit");
-    } else {
-        console.log("Invalid choice. Please try again.");
     }
-})
+
+    })
+}
+
+function computeFactorial(){
+    console.log("Factorial");
+
+    
+        rl.question("Enter a number for factorial: ", (numStr) =>{
+            let num = parseInt(numStr);
+
+            if(isNaN(num) || num<0){
+                console.log("Plaese enter a non-negative integer");
+            } else {
+
+                let fact = 1;
+
+                for (let i = 1; i <= num ; i++){
+                    fact *=i;
+                }
+
+                console.log("The factorial of " + num + "is" + fact);
+             
+            }
+            backToMenu();
+        });
+    }
+
+function backToMenu(){
+    console.log("-------");
+    console.log("1. Back to menu");
+    console.log("2. Exit");
+
+    rl.question("What would you like to do next? (1-2) :", (backToMenuChoice) =>{
+        if(backToMenuChoice ==="1"){
+            console.clear();
+            mainMenu();
+        } else if (backToMenuChoice === "2"){
+            console.log("existing program...Goodbye");
+            rl.close();
+        }else{
+            console.log("invalid choice. Please try again");
+            backToMenu();
+
+        }    
+            
+     })
+}
+ 
+mainMenu();
