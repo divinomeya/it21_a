@@ -7,7 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h1>Line Chart</h1>
+    <h1>Radar Chart</h1>
     <div>
   <canvas id="radarChart"></canvas>
     </div>  
@@ -54,10 +54,10 @@ class radarChart{
     }
     async fetchData(){
         try{
-            const responsive = await fetch(this.dataUrl);
-            if(!responsive.ok) throw new Error('Fail to load data:($(responsive.statusText)');
+            const response = await fetch(this.dataUrl);
+            if(!response.ok) throw new Error(`Failed To Load Data: ${response.statusText}`);
 
-            const data = await responsive.json();
+            const data = await response.json();
             return data;
         }catch(error){
             console.error("Error feching Data:" , error);
@@ -69,8 +69,8 @@ class radarChart{
         if(data)this.renderChart(data);
     }
 }
-document.addEventsListener("DOMContextLoaded" , ()=>{
-    const chart = new radarChart("radarChat", "radarChart.json");
+document.addEventListener("DOMContentLoaded" , ()=>{
+    const chart = new radarChart("radarChart", "radarData.json");
     chart.init();
 });
 </script>
